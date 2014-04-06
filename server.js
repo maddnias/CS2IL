@@ -41,7 +41,7 @@ app.post('/index', function(req, res){
     					req.connection.remoteAddress || 
      					req.socket.remoteAddress ||
      					req.connection.socket.remoteAddress;
-		    	fs.appendFile('log.txt', ip + ' just compiled a file!', function (err) {
+		    	fs.appendFile('log.txt', ip + ' just compiled a file!\r\n', function (err) {
 
 				});
 		    }
