@@ -1,0 +1,7 @@
+body {
+	background-color: #A0A0A0;
+}
+
+span.tab{
+    padding: 0 80px; /* Or desired space*/
+}

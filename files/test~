@@ -1,0 +1,11 @@
+using System;
+namespace CS2ILHelper
+{
+	public class MyClass
+	{
+		public static void Main(string[] args) {
+			Console.WriteLine(""test"");
+			Console.ReadLine ();
+		}
+	}
+}
