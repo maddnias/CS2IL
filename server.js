@@ -19,6 +19,10 @@ app.get('/index', function(req, res) {
 	res.render("index.html");
 });
 
+app.get('/', function(req, res) {
+	res.redirect('/index');
+});
+
 var d = require('domain').create();
 
 d.on('error', function(err) {
@@ -31,7 +35,7 @@ app.post('/index', function(req, res){
 		    if(err) {
 		        console.log(err);
 		    } else {
-		        var output = execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe");
+		        var output = execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version);
 		    	res.render('paste.html', { cscode: req.body.txtCode, ilcode: output});
 		    }
 		}); 
