@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="/css/styles/vs.css" rel="stylesheet" />
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="/css/sh_ide-msvcpp.min.css">
+    <script type="text/javascript" src="/js/sh_main.min.js"></script>
+    <script type="text/javascript" src="/js/sh_csharp.min.js"></script>
   </head>
   <body>
-
+  <body onload="sh_highlightDocument();">
     <div class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <a href ="/" class="navbar-brand">C# to MSIL converter</a>
@@ -30,11 +33,11 @@
     <div class="row-fluid">
         <div class="col-md-5 col-md-offset-1">
           <label>C# code</label>
-          <pre><code class="cs">{{cscode}}</code></pre>
+          <pre class="sh_csharp" style="border: 0px;">{{cscode}}</pre>
         </div>
         <div class="col-md-5 col-md-offset-0">
           <label>MSIL code</label>
-          <pre><code class="cs">{{ilcode}}</code></pre>
+          <pre class="sh_csharp" style="border: 0px;">{{ilcode}}</pre>
         </div>
     </div>
 </div>
