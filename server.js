@@ -37,6 +37,13 @@ app.post('/index', function(req, res){
 		    } else {
 		        var output = execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version);
 		    	res.render('paste.html', { cscode: req.body.txtCode, ilcode: output});
+		    	var ip = req.headers['x-forwarded-for'] || 
+    					req.connection.remoteAddress || 
+     					req.socket.remoteAddress ||
+     					req.connection.socket.remoteAddress;
+		    	fs.appendFile('log.txt', ip + ' just compiled a file!', function (err) {
+
+				});
 		    }
 		}); 
 	});
