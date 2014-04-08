@@ -1,11 +1,15 @@
 using System;
+using System.Threading;
+using System.IO;
+
 namespace CS2ILHelper
 {
-	public class MyClass
+	public class Helper
 	{
-		public static void Main(string[] args) {
-			Console.WriteLine(""test"");
-			Console.ReadLine ();
+		public static void TestMethod() {
+			for(var i = 0;i < 10;i++) {
+				Console.WriteLine(i);	
+			}
 		}
-	}
+}
 }

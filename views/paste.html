@@ -33,18 +33,59 @@
     <div class="row-fluid">
         <div class="col-md-5 col-md-offset-1">
           <label>C# code</label>
-          <pre class="sh_csharp" style="border: 0px;">{{cscode}}</pre>
+          {{#each cscode}}
+            <pre id="{{index}}" class="cs sh_csharp" style="border: 0px; margin: 0; padding: 0;">{{block}}</pre>
+          {{/each}}
         </div>
         <div class="col-md-5 col-md-offset-0">
           <label>MSIL code</label>
-          <pre class="sh_csharp" style="border: 0px;">{{ilcode}}</pre>
+          {{#each ilcode}}
+            <pre id="{{ilidx}}" class="il sh_csharp" style="border: 0px; margin: 0; padding: 0;">{{block}}</pre>
+          {{/each}}
         </div>
     </div>
 </div>
 
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src = "/js/bootstrap.js"></script>
+    <script>
+    $(document).ready(function(){
+
+    //run once
+    var el=$('#scrolldiv');
+    var originalelpos=el.offset().top; // take it where it originally is on the page
+
+    //run on scroll
+     $(window).scroll(function(){
+        var el = $('#scrolldiv'); // important! (local)
+        var elpos = el.offset().top; // take current situation
+        var windowpos = $(window).scrollTop();
+        var finaldestination = windowpos+originalelpos;
+        el.stop().animate({'top':finaldestination},500);
+     });
+
+});
+    </script>
     <script src = "/js/highlight.pack.js"></script>
+    {{#each codemaps}}
+    <script>
+      var ilblocks{{line}} = "{{indexes}}".split(',');
+
+      $("pre").filter(".cs").filter("#{{line}}").hover(
+        function() {
+          $(this).css("background-color","yellow");
+          $.each(ilblocks{{line}}, function(index) {
+              $("pre").filter(".il").filter("#" + ilblocks{{line}}[index]).css("background-color","yellow");
+          });
+        }, function() {
+          $(this).css("background-color","white");
+          $.each(ilblocks{{line}}, function(index) {
+              $("pre").filter(".il").filter("#" + ilblocks{{line}}[index]).css("background-color","white");
+          });
+        }
+      );
+    </script>
+    {{/each}}
     <script type="text/javascript">
       hljs.initHighlightingOnLoad();
     </script>

@@ -6,6 +6,7 @@ var sys = require('sys')
 var exec = require('child_process').exec;
 var fs = require('fs');
 var execSync = require('exec-sync');
+var endOfLine = require('os').EOL;
 
 app.enable('trust proxy');
 app.set('views', __dirname + '/views/');
@@ -35,8 +36,29 @@ app.post('/index', function(req, res){
 		    if(err) {
 		        console.log(err);
 		    } else {
-		        var output = execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version);
-		    	res.render('paste.html', { cscode: req.body.txtCode, ilcode: output});
+		        var output = JSON.parse(execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version));
+
+		        var disasm = output["Disassembly"].split('\\n');
+				var codeMap = output["CodeMap"];
+				var source = req.body.txtCode.split(endOfLine);
+
+				var codeBlocks = [];
+				var ilBlocks = [];
+				var codeMaps = [];
+
+				for(var i = 0;i < source.length;i++) {
+					codeBlocks.push({index: i, block:source[i]});
+				}
+
+				for(var i = 0;i < disasm.length;i++) {
+					ilBlocks.push({index: i, block:disasm[i].split('|')[0], ilidx: disasm[i].split('|')[1]});
+				}
+
+				for(var i = 1, x = 1;i < codeMap.split('_').length;i+=2,x++) {
+					codeMaps.push({line:codeMap.split('_')[i], indexes: codeMap.split('_')[i+1].split('|')[1].replace('"', '')});
+				}
+
+		    	res.render('paste.html', { cscode: codeBlocks, ilcode: ilBlocks, codemaps: codeMaps});
 		    	var ip = req.headers['x-forwarded-for'] || 
     					req.connection.remoteAddress || 
      					req.socket.remoteAddress ||
