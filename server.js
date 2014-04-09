@@ -36,9 +36,10 @@ app.post('/index', function(req, res){
 		    if(err) {
 		        console.log(err);
 		    } else {
-		        var output = JSON.parse(execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version));
+		        var output = JSON.parse(execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version + " " + req.body.cbComments));
 
-		        var disasm = output["Disassembly"].split('\\n');
+		        var disasm = output["Disassembly"].substring(1, output["Disassembly"].length-1);
+		        disasm = disasm.split('\\n');
 				var codeMap = output["CodeMap"];
 				var source = req.body.txtCode.split(endOfLine);
 
@@ -51,7 +52,7 @@ app.post('/index', function(req, res){
 				}
 
 				for(var i = 0;i < disasm.length;i++) {
-					ilBlocks.push({index: i, block:disasm[i].split('|')[0], ilidx: disasm[i].split('|')[1]});
+					ilBlocks.push({index: i, block:disasm[i].split('|')[0].replace("\\t", "\t"), ilidx: disasm[i].split('|')[1]});
 				}
 
 				for(var i = 1, x = 1;i < codeMap.split('_').length;i+=2,x++) {
@@ -64,7 +65,6 @@ app.post('/index', function(req, res){
      					req.socket.remoteAddress ||
      					req.connection.socket.remoteAddress;
 		    	fs.appendFile('log.txt', ip + ' just compiled a file!\r\n', function (err) {
-
 				});
 		    }
 		}); 

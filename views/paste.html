@@ -48,24 +48,6 @@
 
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src = "/js/bootstrap.js"></script>
-    <script>
-    $(document).ready(function(){
-
-    //run once
-    var el=$('#scrolldiv');
-    var originalelpos=el.offset().top; // take it where it originally is on the page
-
-    //run on scroll
-     $(window).scroll(function(){
-        var el = $('#scrolldiv'); // important! (local)
-        var elpos = el.offset().top; // take current situation
-        var windowpos = $(window).scrollTop();
-        var finaldestination = windowpos+originalelpos;
-        el.stop().animate({'top':finaldestination},500);
-     });
-
-});
-    </script>
     <script src = "/js/highlight.pack.js"></script>
     {{#each codemaps}}
     <script>
