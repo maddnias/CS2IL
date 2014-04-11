@@ -40,18 +40,17 @@
         <div class="col-md-5 col-md-offset-0">
           <label>MSIL code</label>
           {{#each ilcode}}
-            <pre id="{{ilidx}}" class="il sh_csharp" style="border: 0px; margin: 0; padding: 0;">{{block}}</pre>
+            <pre id="{{index}}" class="il sh_csharp" style="border: 0px; margin: 0; padding: 0;">{{block}}</pre>
           {{/each}}
         </div>
     </div>
 </div>
-
     <script src = "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src = "/js/bootstrap.js"></script>
     <script src = "/js/highlight.pack.js"></script>
-    {{#each codemaps}}
     <script>
-      var ilblocks{{line}} = "{{indexes}}".split(',');
+    {{#each codemap}}
+      var ilblocks{{line}} = "{{instructionindexes}}".split(',');
 
       $("pre").filter(".cs").filter("#{{line}}").hover(
         function() {
@@ -66,8 +65,8 @@
           });
         }
       );
-    </script>
     {{/each}}
+    </script>
     <script type="text/javascript">
       hljs.initHighlightingOnLoad();
     </script>
