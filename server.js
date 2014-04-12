@@ -52,6 +52,11 @@ app.post('/index', function(req, res){
 		    		res.send('Invalid data');
 
 		        var output = JSON.parse(execSync("./files/CS2ILHelper.exe ./files/test ./files/tmp123.exe " + req.body.version + " " + (comments ? "on" : "off")));
+
+		        if(output["Errors"].length != 0) {
+		        	res.render('paste.html', { "cscode" : output["Errors"]});
+		        }
+
 		        var source = req.body.txtCode.split(endOfLine);
 		        var codeBlocks = [];
 
